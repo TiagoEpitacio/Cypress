@@ -12,3 +12,9 @@ Cypress.Commands.add('login', (user, password) =>{
             })
         })
 })
+
+Cypress.Commands.add('resetarConta', () => {
+    cy.get(loc.MENU.CONFIGURACOES).click()
+    cy.get(loc.MENU.RESETAR).click()
+    cy.get(loc.MESSAGE).should('contain', 'Dados resetados com sucesso!')
+})

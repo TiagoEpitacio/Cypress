@@ -9,7 +9,7 @@ describe('Testes funcionais da aplicação', () => {
     })
     
     it('Resetar conta', () =>{
-        cy.resetarConta()
+        cy.resetarApp()
     })
 
     it('Inserir nova conta', () => {

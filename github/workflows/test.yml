@@ -1,10 +1,9 @@
 name: Execução de testes funcionais
-
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
   schedule:
     - cron: '0 9,11,15,18 * * 1,2,3,4,5'
 
@@ -19,6 +18,6 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           command:  npm run cypress:open
-
+          browser: chrome
    
     

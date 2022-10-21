@@ -1,5 +1,6 @@
 import loc from './locators.cy'
 
+///Comandos Front-end
 Cypress.Commands.add('login', (user, password) =>{
     cy.visit('https://barrigareact.wcaquino.me')
         cy.fixture('dados').as('dadosLogin').then(()=>{
@@ -13,8 +14,33 @@ Cypress.Commands.add('login', (user, password) =>{
         })
 })
 
-Cypress.Commands.add('resetarConta', () => {
+Cypress.Commands.add('resetarApp', () => {
     cy.get(loc.MENU.CONFIGURACOES).click()
     cy.get(loc.MENU.RESETAR).click()
     cy.get(loc.MESSAGE).should('contain', 'Dados resetados com sucesso!')
+})
+
+
+///Comandos Back-end
+Cypress.Commands.add('getToken', (user,password) =>{
+    cy.request({
+        method: 'POST',
+        url: '/signin',
+        body:{
+            email: user,
+            redirecionar: false,
+            senha: password
+        }
+    }).its('body.token').should('not.be.empty')
+        .then(token=> {
+            return token
+    })
+})
+
+Cypress.Commands.add('resetRest', (token) => {
+        cy.request({
+            method: 'GET',
+            url:'/reset',
+            headers:{ Autorization: `JWT ${token}`}
+        }).its('status').should('be.equal', 200)
 })

@@ -10,14 +10,14 @@ describe('Testes de API', () => {
     })
 
     beforeEach(() =>{
-        cy.resetRest(token)
+        cy.resetRest()
     })
 
-    it.skip('Deve criar uma conta', () => {
+    it('Deve criar uma conta', () => {
         cy.request({
             url: '/contas',
             method: 'POST',
-            headers:{ Autorization: `JWT ${token}`},
+            headers:{ Authorization: `JWT ${token}`},
             body: {
                 nome: 'Conta via rest'
             } 

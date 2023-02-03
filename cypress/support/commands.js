@@ -33,14 +33,16 @@ Cypress.Commands.add('getToken', (user,password) =>{
         }
     }).its('body.token').should('not.be.empty')
         .then(token=> {
-            return token
+             return token
     })
 })
 
-Cypress.Commands.add('resetRest', (token) => {
+Cypress.Commands.add('resetRest', () => {
+    cy.getToken('Tiago@hotmail.com','Tiago1234').then(token => {
         cy.request({
             method: 'GET',
-            url:'/reset',
-            headers:{ Autorization: `JWT ${token}`}
+            url:'https://barrigarest.wcaquino.me/reset',
+            headers:{Authorization: `JWT ${token}`}
         }).its('status').should('be.equal', 200)
+    })  
 })

@@ -41,7 +41,7 @@ Cypress.Commands.add('resetRest', () => {
     cy.getToken('Tiago@hotmail.com','Tiago1234').then(token => {
         cy.request({
             method: 'GET',
-            url:'https://barrigarest.wcaquino.me/reset',
+            url:'/reset',
             headers:{Authorization: `JWT ${token}`}
         }).its('status').should('be.equal', 200)
     })  

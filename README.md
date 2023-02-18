@@ -1,5 +1,5 @@
 # Cypress
-Projeto de testes usando framework Cypress
+Projeto de testes usando Cypress
 
 # executar cypress
 npm run cypress:open

@@ -17,7 +17,7 @@ jobs:
         with:
           browser: chrome
           record: true
-          env:
+        env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
    
     

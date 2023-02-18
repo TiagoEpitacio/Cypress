@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-
 describe('Testes de API', () => {
     let token
     before(() => {
@@ -29,4 +28,31 @@ describe('Testes de API', () => {
             expect(res.body).to.have.property('nome', 'Conta via rest')
         })
     })
+
+    it('Deve alterar uma conta', () =>{
+
+        
+        cy.request({
+            method: 'GET',
+            url:'/contas',
+            headers: { Authorization: `JWT ${token}`},
+            qs:{
+                nome:'Conta para alterar'
+            }
+        }).then( res => {
+          
+            cy.request({
+                url: `/contas/${res.body[0].id}`,
+                method: 'PUT',
+                headers:{ Authorization: `JWT ${token}`},
+                body: {
+                    nome: 'Nome da conta alterada via rest'
+                }
+            }).as('response')
+        })
+
+        cy.get('@response').its('status').should('be.equal', 200)
+    })
+
+
 })

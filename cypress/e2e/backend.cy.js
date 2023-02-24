@@ -55,4 +55,23 @@ describe('Testes de API', () => {
     })
 
 
+    it('Não deve permitir criar uma conta com mesmo nome', () =>{
+
+        cy.request({
+            url:'/contas',
+            method: 'POST',
+            headers: {Authorization : `JWT ${token}`},
+            body: {
+                nome: 'Conta mesmo nome'
+            }, 
+            failOnStatusCode: false
+
+        }).as('response')
+
+        cy.get('@response').then(res => {
+            expect(res.status).to.be.equal(400)
+            expect(res.body.error).to.be.equal('Já existe uma conta com esse nome!')
+        })
+    }) 
+
 })

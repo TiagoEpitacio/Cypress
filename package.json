@@ -12,9 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cypress-xpath": "^2.0.0"
+    "cypress-xpath": "^2.0.0",
+    "luxon": "^3.3.0"
   },
   "devDependencies": {
-    "cypress": "^12.6.0"
+    "cypress": "^12.13.0"
   }
 }

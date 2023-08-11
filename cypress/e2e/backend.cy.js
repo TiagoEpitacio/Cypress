@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+
 describe('Testes de API', () => {
     let token
     before(() => {
@@ -74,4 +75,44 @@ describe('Testes de API', () => {
         })
     }) 
 
+    it('Devo inserir uma movimentação', () =>{
+        cy.getContaByName('Conta para movimentacoes')
+        .then(contaId => {
+            cy.request({
+                method: 'POST',
+                url:'/transacoes',
+                headers: {Authorization : `JWT ${token}`},
+                body: {
+                    conta_id: contaId,
+                    data_transacao: "12/11/2010",
+                    data_pagamento: "13/11/2010",
+                    descricao: "desc",
+                    envolvido: "inter",
+                    status: true,
+                    tipo: "REC",
+                    valor: "123"
+                }
+
+            }).as('response')
+        })
+        cy.get('@response').its('body.id').should('exist')
+        cy.get('@response').its('status').should('be.equal', 201)
+    }) 
+
+    it('Devo validar o saldo', () =>{
+        cy.request({
+            url: '/saldo',
+            method: 'GET',
+            headers: { Authorization: `JWT ${token}`,}
+        }).then(res =>{
+            let saldoConta = null
+            res.body.forEach(c =>{
+                if(c.conta === 'Conta para saldo') saldoConta = c.saldo
+            })
+            expect(saldoConta).to.be.equal('534.00')
+        })
+    })
+
+
+    
 })

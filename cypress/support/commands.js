@@ -1,4 +1,5 @@
 import loc from './locators.cy'
+import { DateTime } from 'luxon';
 
 ///Comandos Front-end
 Cypress.Commands.add('login', (user, password) =>{
@@ -46,3 +47,23 @@ Cypress.Commands.add('resetRest', () => {
         }).its('status').should('be.equal', 200)
     })  
 })
+
+Cypress.Commands.add('getContaByName', name => {
+    cy.getToken('Tiago@hotmail.com','Tiago1234').then(token => {
+        cy.request({
+            method:'GET',
+            url: '/contas',
+            headers:{Authorization: `JWT ${token}`},
+            qs:{
+                nome: name
+            }
+        }).then(res => {
+            return res.body[0].id
+        })
+    })    
+})
+
+Cypress.Commands.add('obterDataAtualFormatada', (dias, formato) => {
+    const dataAtual = DateTime.now();
+    return dataAtual.plus(dias).toFormat(formato);
+}) 

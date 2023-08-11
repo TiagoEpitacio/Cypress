@@ -99,7 +99,7 @@ describe('Testes de API', () => {
         cy.get('@response').its('status').should('be.equal', 201)
     }) 
 
-    it('Devo validar o saldo', () =>{
+    it('Devo validar o saldoda conta', () =>{
         cy.request({
             url: '/saldo',
             method: 'GET',
